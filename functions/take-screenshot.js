@@ -1,6 +1,11 @@
 const chromium = require("chrome-aws-lambda");
 const puppeteer = require("puppeteer-core");
 exports.handler = async (event, context) => {
+  const body = JSON.parse(event.body) || {
+    body: { url: "https://github.com/joshatoutthink/" },
+  };
+  const { url } = body;
+
   const browser = await puppeteer.launch({
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
@@ -8,7 +13,7 @@ exports.handler = async (event, context) => {
     headless: chromium.headless,
   });
   const page = await browser.newPage();
-  await page.goto("https://google.com", { waitUntil: "networkidle2" });
+  await page.goto(url, { waitUntil: "networkidle2" });
   const screenshot = await page.screenshot({ encoding: "binary" });
 
   return {
