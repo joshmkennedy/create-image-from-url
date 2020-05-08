@@ -15,6 +15,7 @@
     "puppeteer-core": "^2.0.0"
   },
   "devDependencies": {
+    "netlify-lambda": "^1.6.3",
     "puppeteer": "^2.0.0"
   }
 }

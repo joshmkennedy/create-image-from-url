@@ -1,6 +1,7 @@
 const chromium = require("chrome-aws-lambda");
-//const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-core");
 exports.handler = async (event, context) => {
+  console.log(process.env);
   const pageToScreenshot = JSON.parse(event.body).pageToScreenshot;
 
   if (!pageToScreenshot)
@@ -10,7 +11,7 @@ exports.handler = async (event, context) => {
     };
   const path = await chromium.executablePath;
   console.log(path);
-  const browser = await chromium.puppeteer.launch({
+  const browser = await puppeteer.launch({
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
     executablePath: await chromium.executablePath,
@@ -21,7 +22,7 @@ exports.handler = async (event, context) => {
 
   await page.goto(pageToScreenshot, { waitUntil: "networkidle2" });
 
-  const screenshot = await page.screenshot({ encoding: "binary" });
+  //const screenshot = await page.screenshot({ encoding: "binary" });
 
   await browser.close();
 
@@ -29,7 +30,7 @@ exports.handler = async (event, context) => {
     statusCode: 200,
     body: JSON.stringify({
       message: `Complete screenshot of ${pageToScreenshot}`,
-      buffer: screenshot,
+      /* buffer: screenshot, */
     }),
   };
 };
