@@ -3,8 +3,8 @@ const puppeteer = require("puppeteer-core");
 exports.handler = async (event, context) => {
   const body = event.body
     ? JSON.parse(event.body)
-    : { url: "https://github.com/joshatoutthink/" },
-      
+    : { url: "https://github.com/joshatoutthink/" };
+
   const { url } = body;
 
   const browser = await puppeteer.launch({
