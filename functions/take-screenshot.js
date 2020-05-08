@@ -18,6 +18,9 @@ exports.handler = async (event, context) => {
   const screenshot = await page.screenshot({ encoding: "binary" });
 
   return {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
     statusCode: 200,
     body: JSON.stringify({ screenshot }),
   };
