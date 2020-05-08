@@ -4,8 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script src="index.js"></script>
   </head>
   <body>
     hello
+    <div id="img"></div>
+    <script>
+      function bufferToImageUrl(buffer) {
+        // See https://gist.github.com/candycode/f18ae1767b2b0aba568e
+
+        var arrayBufferView = new Uint8Array(buffer);
+        var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
+        var urlCreator = window.URL || window.webkitURL;
+        var imageUrl = urlCreator.createObjectURL(blob);
+
+        return imageUrl;
+      }
+      async function getImage() {
+        const mountDiv = document.querySelector("#img");
+        const res = await fetch(`/api/${FUNCTION}`);
+        const data = await res.json();
+        const { screenshot } = data;
+        const img = document.createElement("img");
+        img.src = bufferToImageUrl(screenshot.data);
+        console.log(img);
+        mountDiv.innerHTML = img.outerHTML;
+      }
+      getImage();
+    </script>
   </body>
 </html>
