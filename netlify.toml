@@ -1,6 +1,8 @@
 
 [build]
-  publish = "public/"
-  functions = "./functions/"
-[context.production]
-  environment = { FUNCTION = 'take-screenshot.js' }
+  publish = "dist"
+  functions = "functions"
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
