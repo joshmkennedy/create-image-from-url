@@ -1,5 +1,5 @@
 const chromium = require("chrome-aws-lambda");
-//const puppeteer = require("puppeteer");
+
 exports.handler = async (event, context) => {
   const pageToScreenshot = JSON.parse(event.body).pageToScreenshot;
 
@@ -8,12 +8,13 @@ exports.handler = async (event, context) => {
       statusCode: 400,
       body: JSON.stringify({ message: "Page URL not defined" }),
     };
-  const path = await chromium.executablePath;
-  console.log(path);
+
   const browser = await chromium.puppeteer.launch({
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath,
+    //executablePath: await chromium.executablePath,
+    executablePath:
+      "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
     headless: true,
   });
 
